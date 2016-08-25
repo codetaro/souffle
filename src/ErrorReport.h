@@ -53,7 +53,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream &out, const DiagnosticMessage &diagnosticMessage) {
-        diagnosticMessage.print(out);
+        //diagnosticMessage.print(out);
         return out;
     }
 };
@@ -96,7 +96,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& out, const Diagnostic& diagnostic) {
-         diagnostic.print(out);
+         //diagnostic.print(out);
          return out;
     }
 
@@ -142,18 +142,20 @@ public:
 
     /** Adds an error with the given message and location */
     void addError(const std::string &message, AstSrcLocation location) {
-        diagnostics.insert(Diagnostic(Diagnostic::ERROR, DiagnosticMessage(message, location)));
+        std::cout << DiagnosticMessage(message, location) << "\n";
+        //diagnostics.insert(Diagnostic(Diagnostic::ERROR, DiagnosticMessage(message, location)));
     }
 
     /** Adds a warning with the given message and location */
     void addWarning(const std::string &message, AstSrcLocation location) {
         if(!nowarn) {
-          diagnostics.insert(Diagnostic(Diagnostic::WARNING, DiagnosticMessage(message, location)));
+          std::cout << "WARNING\n";
+          //diagnostics.insert(Diagnostic(Diagnostic::WARNING, DiagnosticMessage(message, location)));
         }
     }
 
     void addDiagnostic(Diagnostic diagnostic) {
-        diagnostics.insert(diagnostic);
+        //diagnostics.insert(diagnostic);
     }
 
     void print(std::ostream &out) const {
