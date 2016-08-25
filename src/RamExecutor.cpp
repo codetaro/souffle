@@ -538,7 +538,6 @@ namespace {
             }
 
             bool visitParallel(const RamParallel& parallel) {
-
                 // get statements to be processed in parallel
                 const auto& stmts = parallel.getStatements();
 
@@ -563,6 +562,7 @@ namespace {
                 #pragma omp parallel for reduction(&&:cond)
                 for(size_t i=0;i<stmts.size();i++) {
                     cond = cond && visit(stmts[i]);
+                    std::cout << "Calling statements cond = " << cond << "\n";
                 }
                 return cond;
             }
@@ -609,13 +609,22 @@ namespace {
             bool visitLoad(const RamLoad& load) {
                 if (load.getRelation().isData()) {
                   // Load from mem
-                  env.getRelation(load.getRelation()).load(data->getTuples(
-                  load.getRelation().getName()), 
+                  std::string name = load.getRelation().getName();
+                  if(data == NULL){
+                    std::cout << "data is null\n";
+                    return true;
+                  }
+                  PrimData* pd = data->getTuples(name);
+                  if (pd == NULL || pd->data.size() == 0) {
+                     std::cout << "relation " << name <<" is empty\n"; 
+                     return true;
+                  }
+
+                  bool err = env.getRelation(load.getRelation()).load(pd->data, 
                   env.getSymbolTable(), 
                   load.getRelation().getSymbolMask());
-                  return true;
+                  return !err;
                 }
-
                 // load facts from file
                 std::ifstream csvfile;
                 std::string fname = config.getFactFileDir() + "/" + load.getFileName();
@@ -625,7 +634,9 @@ namespace {
                     std::cerr << "Cannot open fact file " << baseName(fname) << "\n";
                     return false; 
                 }
-                if(env.getRelation(load.getRelation()).load(csvfile, env.getSymbolTable(), load.getRelation().getSymbolMask())) {
+                if(env.getRelation(load.getRelation()).load(csvfile, env.getSymbolTable(), 
+                                   load.getRelation().getSymbolMask())) {
+
                     char *bname = strdup(fname.c_str());
                     std::string simplename = basename(bname);
                     std::cerr << "Wrong arity of fact file " << simplename << "!\n";
@@ -635,11 +646,13 @@ namespace {
             }
 
             bool visitStore(const RamStore& store) {
-                if(store.getRelation().isData()){
+                if(store.getRelation().isData()) { 
+                  // Dont output file then
                   return true;
                 }
 
                 auto& rel = env.getRelation(store.getRelation());
+
                 if (config.getOutputDir() == "-") {
                     std::cout << "---------------\n" << rel.getName() << "\n===============\n";
                     rel.store(std::cout, env.getSymbolTable(), store.getRelation().getSymbolMask());
@@ -652,6 +665,7 @@ namespace {
             }
 
             bool visitFact(const RamFact& fact) {
+                std::cout << "FACT\n";
                 auto arity = fact.getRelation().getArity();
                 RamDomain tuple[arity];
                 auto values = fact.getValues();
@@ -2129,7 +2143,6 @@ std::string RamCompiler::generateCode(const SymbolTable& symTable, const RamStat
 }
 
 std::string RamCompiler::compileToLibrary(const SymbolTable& symTable, const RamStatement& stmt, const std::string& name) const {
-
     std::string source = generateCode(symTable, stmt, name + ".cpp");
 
     // execute shell script that compiles the generated C++ program
@@ -2139,12 +2152,10 @@ std::string RamCompiler::compileToLibrary(const SymbolTable& symTable, const Ram
     if (getConfig().isLogging()) {
         std::cout.flush();
     }
-
     // run executable
     if(system(cmd.c_str()) != 0) {
         std::cerr << "failed to compile C++ source " << name << "\n";
     }
-
     // done
     return name;
 }
