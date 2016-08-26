@@ -106,8 +106,8 @@ public:
     size_t lookup(const char *p) {
         size_t result;
         {
-            auto lease = access.acquire();
-            (void) lease; // avoid warning;
+          //  auto lease = access.acquire();
+          //  (void) lease; // avoid warning;
 
             auto it = strToNum.find(p);
             if (it != strToNum.end()) {
@@ -124,8 +124,8 @@ public:
 
     /** Lookup an index and convert it to a string */
     const char* resolve(size_t i) const {
-        auto lease = access.acquire();
-        (void) lease; // avoid warning;
+       // auto lease = access.acquire();
+       // (void) lease; // avoid warning;
         return numToStr[i];
     }
 
@@ -136,8 +136,8 @@ public:
 
     /** insert symbols from a constant string table */ 
     void insert(const char **symbols, size_t n) {
-        auto lease = access.acquire();
-        (void) lease; // avoid warning;
+       // auto lease = access.acquire();
+       // (void) lease; // avoid warning;
         for(size_t idx=0; idx < n; idx++) {
             const char *p = symbols[idx];
             char *str = strdup(p);
