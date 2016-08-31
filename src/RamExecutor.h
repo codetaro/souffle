@@ -63,7 +63,7 @@ class RamExecutorConfig {
 
 public:
 
-    RamExecutorConfig() : sourceFileName("-unknown-"), factFileDir("./"), outputDir("./"), num_threads(1), logging(false), debug(false) {}
+    RamExecutorConfig() : sourceFileName("-unknown-"), factFileDir("./"), outputDir("./"), num_threads(1), logging(true), debug(false) {}
 
     // -- getters and setters --
 
