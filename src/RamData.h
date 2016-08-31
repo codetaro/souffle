@@ -71,12 +71,20 @@ class RamData {
     }
 
     PrimData* getTuples(std::string name) {
-      if (data_map.find(name) == data_map.end()){
-        std::cout << "name " << name << "not in datamap\n";
-      } 
-      if(data_map[name]->data.size() == 0) {
-        return NULL;
+      if (data_map.find(name) == data_map.end()) {
+        std::cout << "name : " << name << " not in data_map\n";
+        for(auto d : data_map){
+            std::cout << " name = " << d.first << " \n";
+            if(d.first == name) { 
+              assert(false && "name is in data_map!!");
+            }
+        }
       }
+
+      if(data_map[name]->data.size() == 0) {
+          return NULL;
+      }
+
       return data_map[name];
     }
 
