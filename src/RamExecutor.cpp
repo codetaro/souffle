@@ -639,7 +639,7 @@ namespace {
 
                     char *bname = strdup(fname.c_str());
                     std::string simplename = basename(bname);
-                    std::cerr << "Wrong arity of fact file " << simplename << "!\n";
+                    std::cerr << "cannot parse fact file " << simplename << "!\n";
                     return false;
                 };
                 return true;
