@@ -32,16 +32,27 @@ else
     CXXFLAGS="$CXXFLAGS -O3"
 fi
 
+JNIFLAGS=" $JNIFLAGS -jni -d -fPIC -g -std=c++11"
 
-
+#AC_CANONICAL_HOST
+# Detect the target system
+#case "${host_os}" in
+#    linux*)
+#        ;;
+#
+#    darwin*)
+#	JNIFLAGS="$JNIFLAGS -I$(/usr/libexec/java_home)/include -I$(/usr/libexec/java_home)/include/darwin"
+#        ;;
+#    *)
+#        ;;
+#esac	
 AX_JNI_INCLUDE_DIR
 
 for JNI_INCLUDE_DIR in $JNI_INCLUDE_DIRS
 do
-  JNIFLAGS="$JNIFLAGS -I$JNI_INCLUDE_DIR"
+	JNIFLAGS="$JNIFLAGS -I$JNI_INCLUDE_DIR"
 done
 
-JNIFLAGS=" -jni -d -fPIC -g -std=c++11"
 
 AC_ISC_POSIX
 AC_PROG_CPP
