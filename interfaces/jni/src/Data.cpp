@@ -30,7 +30,7 @@ void Java_com_soufflelang_souffle_Data_print(JNIEnv* env, jobject obj) {
     LOG(INFO) ENTERJNI("print");
     RamData* data = getHandle<RamData>(env, obj);
     LOG(MEM) PRE << "Retrieved data object "  << data << "\n";
-    data->print();
+    //data->print();
     LOG(INFO) LEAVEJNI;
 }
 

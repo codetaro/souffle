@@ -33,6 +33,10 @@
 
 namespace souffle {
 
+extern "C" {
+  souffle::SouffleProgram* getInstance(const char* p) { return souffle::ProgramFactory::newInstance(p); }
+}
+
 /**
  * Relation wrapper used internally in the generated Datalog program 
  */

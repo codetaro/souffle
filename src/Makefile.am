@@ -6,7 +6,7 @@
 
 SUBDIRS = wavelib
 
-SUFFIXES = .cpp .h .yy .ll .cc .hh .hpp
+SUFFIXES = .cpp .h .yy .ll .cc .hh .hpp .java .class
 
 bin_PROGRAMS = souffle souffle-wave
 

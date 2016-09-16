@@ -22,7 +22,7 @@ public class Driver {
         Relation r1 = new Relation("edge");
         r1.addAttribute("node1", ty);
         r1.addAttribute("node2", ty);
-        r1.setAsData();
+        //r1.setAsData();
         p.addRelation(r1);
 
         // .decl path (node1:Node, node2:Node) output
@@ -85,9 +85,9 @@ public class Driver {
 
         create1(p);
         souffle.parse(p);
-        Result r = souffle.execute(data);
+        //Result r = souffle.execute(data);
         System.out.println("got result \n");
-        r.print();
+        //r.print();
         // e.setInputData();
         //Results r = e.execute();
         //r.print();

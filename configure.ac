@@ -10,6 +10,10 @@ AC_PREREQ(2.68)
 AC_COPYRIGHT(['2013-15 Oracle and/or its affiliates'])
 AC_CONFIG_MACRO_DIRS([m4])
 
+
+LT_PREREQ([2.2])
+LT_INIT([dlopen])
+
 AC_CANONICAL_TARGET # target_cpu, target_vendor, and target_os
 AC_CANONICAL_BUILD  # build_cpu, build_vendor, and build_os
 AC_CANONICAL_HOST   # host_cpu, host_vendor, and host_os
@@ -28,6 +32,17 @@ else
     CXXFLAGS="$CXXFLAGS -O3"
 fi
 
+
+
+AX_JNI_INCLUDE_DIR
+
+for JNI_INCLUDE_DIR in $JNI_INCLUDE_DIRS
+do
+  JNIFLAGS="$JNIFLAGS -I$JNI_INCLUDE_DIR"
+done
+
+JNIFLAGS=" -jni -d -fPIC -g -std=c++11"
+
 AC_ISC_POSIX
 AC_PROG_CPP
 AC_PROG_CC
@@ -37,6 +52,7 @@ AC_PROG_MAKE_SET
 AM_PROG_CC_STDC
 AC_PROG_RANLIB
 AX_PROG_JAVAC
+AX_PROG_JAVAH
 AX_PROG_JAVA
 AX_PROG_JAR
 
@@ -159,6 +175,7 @@ AC_CONFIG_FILES([
     Makefile
     src/Makefile
     src/wavelib/Makefile
+    interfaces/Makefile
     prof/Makefile
     tests/Makefile
     tests/atlocal
@@ -211,6 +228,7 @@ AC_FUNC_STRERROR_R
 AC_CHECK_FUNCS([dup2 fchdir getcwd getpagesize gettimeofday isascii memset mkdir munmap pow regcomp rmdir setenv socket strcasecmp strchr strdup strerror strrchr strstr strtol strtoull])
 
 AC_OUTPUT(
-    [ src/souffle-compile src/souffle-config debian/changelog ],
-    [ chmod +x src/souffle-compile src/souffle-config ]
+    [ src/souffle-compile src/souffle-config interfaces/souffle-compilelib debian/changelog ],
+    [ chmod +x src/souffle-compile src/souffle-config interfaces/souffle-compilelib ]
 )
+

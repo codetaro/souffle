@@ -3,7 +3,7 @@ import scala.collection.mutable.ArrayBuffer
 import com.soufflelang.souffle._
 
 object Main {
-  System.loadLibrary("souffle");
+  System.loadLibrary("soufflejni");
 
   def main(args: Array[String]): Unit = {
     // Create Solver
@@ -26,8 +26,6 @@ object Main {
 
     // Execute
     val r = e.executeCompiler(data, "scalaEx");
-
-    data.print();
 
     data.release();
 
