@@ -163,8 +163,6 @@ namespace {
         return eval(*value, env, ctxt);
     }
 
-
-
     bool eval(const RamCondition& cond, RamEnvironment& env, const EvalContext& ctxt = EvalContext()) {
 
         class Evaluator : public RamVisitor<bool> {
@@ -2146,7 +2144,7 @@ std::string RamCompiler::compileToLibrary(const SymbolTable& symTable, const Ram
     std::string source = generateCode(symTable, stmt, name + ".cpp");
 
     // execute shell script that compiles the generated C++ program
-    std::string cmd = "./souffle-compilelib " + name;
+    std::string cmd = "souffle-compilelib " + name;
 
     // separate souffle output form executable output
     if (getConfig().isLogging()) {

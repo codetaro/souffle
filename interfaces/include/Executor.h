@@ -105,7 +105,7 @@ public:
 
     lib_handle = dlopen(openfile.c_str(), RTLD_LAZY);
     if (lib_handle == NULL){
-      std::cout << "interface: Error! Cannot find library!\n";
+      std::cout << "interface: Error! Cannot find library: " << openfile.c_str() << " ! \n";
       return NULL;
     }
 
