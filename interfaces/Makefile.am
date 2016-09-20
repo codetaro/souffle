@@ -119,7 +119,7 @@ libsoufflejni_la_SOURCES = ./jni/src/Negation.cpp \
 #libsoufflejni_la_CXXFLAGS=-I./jni/include/ -I./jni/include/generated/ -I./include/ -I/usr/lib/jvm/java-8-oracle/include/linux/ -I/usr/lib/jvm/java-8-oracle/include/ -I@abs_top_srcdir@/src/ -I@abs_top_srcdir@/ -I@abs_top_srcdir@/include/ -I./include/ $(JNIFLAGS)
 
 
-libsoufflejni_la_CXXFLAGS=-I./jni/include/ -I./jni/include/generated/ -I./include/ -I@abs_top_srcdir@/src/ -I@abs_top_srcdir@/ -I@abs_top_srcdir@/include/ -I./include/ $(JNIFLAGS) 
+libsoufflejni_la_CXXFLAGS=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin -I./jni/include/ -I./jni/include/generated/ -I./include/ -I@abs_top_srcdir@/src/ -I@abs_top_srcdir@/ -I@abs_top_srcdir@/include/ -I./include/ $(JNIFLAGS) 
 
 libsoufflejni_la_LIBADD = @abs_top_srcdir@/src/libsouffle.a
 
